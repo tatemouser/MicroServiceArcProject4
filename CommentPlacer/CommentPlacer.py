@@ -7,10 +7,11 @@ import os
 def add_comments(file_path, comments):
     with open(os.path.join("./files/", file_path), "r") as file:
         code = file.readlines()
-
+    num_comments = 0
     for comment in sorted(comments, key=lambda x: x["lineno"]):
-        code.insert(comment["lineno"] - 1, comment["comment"] + "\n")
-        
+        code.insert(comment["lineno"] - 1 + num_comments, comment["comment"] + "\n")
+        num_comments += 1
+
 
     new_file_path = os.path.join("./files/", file_path).replace(".py", "_commented.py")
     with open(new_file_path, "w") as new_file:

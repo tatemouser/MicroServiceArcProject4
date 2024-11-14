@@ -9,17 +9,19 @@ def parse_code(file_path):
         code = file.read()
     
     tree = ast.parse(code)
-    parsed_data = {"functions": [], "assignments": [], "loops": [], "conditionals": []}
+    parsed_data = {"functions": [], "assignments": [], "loops": [], "conditionals": [], "break": []}
 
     for node in ast.walk(tree):
         if isinstance(node, ast.FunctionDef):
-            parsed_data["functions"].append({"name": node.name, "lineno": node.lineno})
+            parsed_data["functions"].append({"name": node.name, "lineno": node.lineno, "offset": node.col_offset})
         elif isinstance(node, ast.Assign):
-            parsed_data["assignments"].append({"lineno": node.lineno})
+            parsed_data["assignments"].append({"lineno": node.lineno, "offset": node.col_offset})
         elif isinstance(node, ast.For):
-            parsed_data["loops"].append({"lineno": node.lineno})
+            parsed_data["loops"].append({"lineno": node.lineno,"offset": node.col_offset})
         elif isinstance(node, ast.If):
-            parsed_data["conditionals"].append({"lineno": node.lineno})
+            parsed_data["conditionals"].append({"lineno": node.lineno, "offset": node.col_offset})
+        elif isinstance(node, ast.Break):
+            parsed_data["break"].append({"lineno": node.lineno, "offset": node.col_offset})
 
     return parsed_data
 

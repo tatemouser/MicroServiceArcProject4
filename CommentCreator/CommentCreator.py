@@ -5,13 +5,15 @@ import time
 def generate_comments(parsed_data):
     comments = []
     for function in parsed_data["functions"]:
-        comments.append({"lineno": function["lineno"], "comment": f"# Function '{function['name']}' definition"})
+        comments.append({"lineno": function["lineno"], "comment": " "*function["offset"] + f"# Function '{function['name']}' definition"})
     for assign in parsed_data["assignments"]:
-        comments.append({"lineno": assign["lineno"], "comment": "# Variable assignment"})
+        comments.append({"lineno": assign["lineno"], "comment": " "*assign["offset"] + "# Variable assignment"})
     for loop in parsed_data["loops"]:
-        comments.append({"lineno": loop["lineno"], "comment": "# Loop starts here"})
+        comments.append({"lineno": loop["lineno"], "comment": " "*loop["offset"] + "# Loop starts here"})
     for cond in parsed_data["conditionals"]:
-        comments.append({"lineno": cond["lineno"], "comment": "# Conditional statement"})
+        comments.append({"lineno": cond["lineno"], "comment": " "*cond["offset"] +"# Conditional statement"})
+    for brk in parsed_data["break"]:
+        comments.append({"lineno": brk["lineno"], "comment": " "*brk["offset"] +"# Conditional statement"})
     return comments
 
 def client_1_and_server_2():
