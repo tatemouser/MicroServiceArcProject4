@@ -1,0 +1,34 @@
+version: '3'
+services:
+  parsing_container:
+    build: ./CodeParser
+    networks:
+      - comment_net
+    environment:
+      - FILENAME=${FILENAME}
+    volumes:
+      - ./files:/app/files/
+
+  commenting_container:
+    build: ./CommentCreator
+    depends_on:
+      - parsing_container
+    networks:
+      - comment_net
+    environment:
+      - FILENAME=${FILENAME}
+
+  adding_comments_container:
+    build: ./CommentPlacer
+    depends_on:
+      - commenting_container
+    networks:
+      - comment_net
+    environment:
+      - FILENAME=${FILENAME}
+    volumes:
+      - ./files:/app/files/
+
+networks:
+  comment_net:
+    driver: bridge
