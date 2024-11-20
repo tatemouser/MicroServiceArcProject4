@@ -10,6 +10,7 @@ COPY *.py ./files/
 
 
 
+
 # Expose the port used for socket communication
 EXPOSE 5000
 

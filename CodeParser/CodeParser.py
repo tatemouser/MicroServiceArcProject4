@@ -3,6 +3,7 @@ import socket
 import json
 import argparse
 import os
+import datetime
 
 def parse_code(file_path):
     with open(os.path.join("./files/", file_path), "r") as file:
@@ -47,5 +48,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Parsing server")
     parser.add_argument("file", help="The filename of the Python script to parse")
     args = parser.parse_args()
-
+    with open("./logs/log.csv", 'a') as f:
+        f.write(str(args.file) + "\n")
+        f.write(str(datetime.datetime.now()))
+        f.write("\n")
     server_1(args.file)

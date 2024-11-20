@@ -3,6 +3,8 @@ import json
 import argparse
 import time
 import os
+import csv
+import datetime
 
 def add_comments(file_path, comments):
     with open(os.path.join("./files/", file_path), "r") as file:
@@ -32,9 +34,13 @@ def client_2(fname):
                 time.sleep(2)  # Wait before retrying
         if retries == 0:
             print("Failed to connect after multiple attempts")
-        data = s.recv(4096).decode()
+        data = s.recv(1048576).decode()
         comments = json.loads(data)
         add_comments(fname, comments)
+    
+    with open("./logs/log.csv", 'a') as f:
+        f.write(str(datetime.datetime.now()))
+        f.write("\n")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Adding comments client")

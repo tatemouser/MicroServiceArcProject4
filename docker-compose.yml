@@ -8,6 +8,7 @@ services:
       - FILENAME=${FILENAME}
     volumes:
       - ./files:/app/files/
+      - ./logs:/app/logs/
 
   commenting_container:
     build: ./CommentCreator
@@ -28,6 +29,7 @@ services:
       - FILENAME=${FILENAME}
     volumes:
       - ./files:/app/files/
+      - ./logs:/app/logs/
 
 networks:
   comment_net:
